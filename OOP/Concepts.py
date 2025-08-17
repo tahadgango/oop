@@ -170,10 +170,10 @@ class Student:
     registry = RegistryStudent()
     
     def __str__(self):
-        return f"Student: {self.name}, major: '{progDict[self.program_id]}', Student Number: {self.studentNum}"
+        return f"Student: {self.name}, major: '{progDict[self.program_id]}', Student Number: {self.studentNum}."
 
     def __init__(self, name = "", grade = 0, program = ""):
-
+ge
         Student.numOfStus += 1
         self.name = name
         self.grade = grade
