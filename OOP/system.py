@@ -1,12 +1,6 @@
 from datetime import date
 from collections import defaultdict
-
-#lists of programs
-EngineerProg = ["software engineering", "civil engineering", "electrical engineering"]
-BusinessProg = ["economy", "international trade", "marketing"]
-
-#list of subjects
-subjects = ["calculus", "linear algebra", "physics", "finance", "accounting", "programming", "e-commerce", "trading"]
+import json
 
 
 # ids <-> programs
@@ -18,34 +12,15 @@ subDict = {}
 subToid = {}
 
 
-for p in EngineerProg + BusinessProg:
-    progDict[len(progDict)+1] = p
+with open("data/programs.json", "r") as f:
+    progDict = json.load(f)
 
-for p in subjects:
-    subDict[len(subDict)+1] = p
+with open("data/subjects.json", "r") as f:
+    subDict = json.load(f)
 
-progToid = {v: k for k, v in progDict.items()}
-subToid = {v: k for k, v in subDict.items()}
+progToid = {v["prog"]: k for k, v in progDict.items()}
+subToid = {v["sub"]: k for k, v in subDict.items()}
 
-
-# subject -> program
-subToProg = defaultdict(list)
-
-# assigning subject to prog (by id)
-for p in EngineerProg + BusinessProg:
-    subToProg[subToid["calculus"]].append(progToid[p])
-
-for p in EngineerProg:
-    subToProg[subToid["linear algebra"]].append(progToid[p])
-    subToProg[subToid["physics"]].append(progToid[p])
-
-for p in BusinessProg:
-    subToProg[subToid["finance"]].append(progToid[p])
-    subToProg[subToid["accounting"]].append(progToid[p])
-
-subToProg[subToid["programming"]].append(progToid["software engineering"])
-subToProg[subToid["e-commerce"]].append(progToid["marketing"])
-subToProg[subToid["trading"]].append(progToid["international trade"])
 
 
 # count number of student in each (major, grade)
@@ -58,12 +33,14 @@ class Depart:
         self.teachers = []
         super().__init__()
 
+    #add teacher or student to the department
     def add(self, user):
         if isinstance(user, Student):
             self.students.append(user)
         else:
             self.teachers.append(user)
 
+    #remove teacher or student from the department
     def remove(self, user):
         if isinstance(user, Student):
             self.students.remove(user)
@@ -93,19 +70,11 @@ class DepartRegistry:
                         "business": bus
                     }
         
-        self.progToDept = {}
-
-        for p in EngineerProg:
-            self.progToDept[progToid[p]] = "engineering"
-
-
-        for p in BusinessProg:
-            self.progToDept[progToid[p]] = "business"
-
+    
         super().__init__()
 
     def findDept(self, id):
-        dept = self.progToDept[id]
+        dept = progDict[id]["dept"]
         return self.departments[dept]
 
     
@@ -136,7 +105,7 @@ class RegistryTeacher(DepartRegistry):
         seen2 = set()
 
         for sub in teacher.subjects:
-            progsOfsub = subToProg[sub]
+            progsOfsub = subDict[sub]["Pids"]
                 
             for prog in progsOfsub:    
                 progs.add(prog)
@@ -170,10 +139,10 @@ class Student:
     registry = RegistryStudent()
     
     def __str__(self):
-        return f"Student: {self.name}, major: '{progDict[self.program_id]}', Student Number: {self.studentNum}."
+        return f"Student: {self.name}, major: '{progDict[self.program_id]["prog"]}', Student Number: {self.studentNum}."
 
     def __init__(self, name = "", grade = 0, program = ""):
-ge
+
         Student.numOfStus += 1
         self.name = name
         self.grade = grade
@@ -205,7 +174,7 @@ class Teacher:
     registry = RegistryTeacher()
 
     def __str__(self):
-        return f"Teacher: {self.name}, salary: {[subDict[s] for s in self.subjects]}"
+        return f"Teacher: {self.name}, salary: {[subDict[s]["sub"] for s in self.subjects]}"
 
     def __init__(self, name = "", salary = 0, subjects = []):
 
@@ -217,7 +186,7 @@ class Teacher:
         
         Teacher.registry.register_teacher(self)
 
-    
+#example
 
 s1 = Student("Taha", 1, "software engineering")
 s2 = Student("Marwan", 3, "software engineering")
@@ -247,3 +216,6 @@ print("\n")
 
 s1.changeProg("economy")
 print(s1)
+
+# still a BUGGY CODE but works for now.
+# bug are mainly in the way of HANDLING INVALID INPUTS and CONFLICTS.
