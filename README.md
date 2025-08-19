@@ -23,3 +23,5 @@ Students are registered by name, grade, and program. Their department is derived
 Teachers are registered by name, salary, and the subjects they teach. Their department(s) are determined from the subjects.
 
 The system uses dictionaries and default structures to maintain bidirectional relationships between names and IDs for subjects/programs.
+
+Thank you!
