@@ -1,0 +1,34 @@
+[
+    {
+        "name": "abdul",
+        "salary": 100000,
+        "subjects": [
+            "programming",
+            "physics"
+        ]
+    },
+    {
+        "name": "bu",
+        "salary": 20,
+        "subjects": [
+            "linear algebra",
+            "calculus"
+        ]
+    },
+    {
+        "name": "bu",
+        "salary": 20,
+        "subjects": [
+            "linear algebra",
+            "calculus"
+        ]
+    },
+    {
+        "name": "xiao",
+        "salary": 10,
+        "subjects": [
+            "trading",
+            "e-commerce"
+        ]
+    }
+]
