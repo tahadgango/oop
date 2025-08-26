@@ -16,14 +16,6 @@
         ]
     },
     {
-        "name": "bu",
-        "salary": 20,
-        "subjects": [
-            "linear algebra",
-            "calculus"
-        ]
-    },
-    {
         "name": "xiao",
         "salary": 10,
         "subjects": [

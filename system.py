@@ -222,12 +222,13 @@ print("\n")
 
 s1.changeProg("economy")
 print(s1)
-
+totStudents = Student.registry.departments["engineering"].students + Student.registry.departments["business"].students
 with open("data/students.json", "w") as f:
-    json.dump([s.data() for s in Student.registry.departments["engineering"].students + Student.registry.departments["business"].students], f, indent=4)
+    json.dump([s.data() for s in totStudents], f, indent=4)
 
+totTeachers = list(set(Teacher.registry.departments["engineering"].teachers + Teacher.registry.departments["business"].teachers))
 with open("data/teachers.json", "w") as f:
-    json.dump([t.data() for t in Teacher.registry.departments["engineering"].teachers + Teacher.registry.departments["business"].teachers], f, indent=4)
+    json.dump([t.data() for t in totTeachers], f, indent=4)
 
 # still a BUGGY CODE but works for now.
 # bug are mainly in the way of HANDLING INVALID INPUTS and CONFLICTS.
